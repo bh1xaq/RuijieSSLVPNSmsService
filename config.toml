@@ -1,0 +1,13 @@
+[app]
+listen = "127.0.0.1:8080"
+[stong]
+reg = "your_registration_value"
+pwd = "your_password_value"
+
+[tencent]
+secret_id = "your_secret_id"
+secret_key = "your_secret_key"
+region = "your_region"
+sms_sdk_app_id = "your_sms_sdk_app_id"
+template_id = "your_template_id"
+sign_name = "your_sign_name"
