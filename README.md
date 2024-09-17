@@ -2,10 +2,10 @@
 
 目前 Ruijie SSLVPN 支持的短信方式有限，本组件实现了基于腾讯云的短信扩展。
 
-# 原理
+## 原理
 劫持华兴软通的短信接口，转发至腾讯云短信服务。
 
-# 接口文档
+## 接口文档
 
 GET http://www.stongnet.com/sdkhttp/sendsms.aspx
 
@@ -23,9 +23,9 @@ GET http://www.stongnet.com/sdkhttp/sendsms.aspx
 
 result=0&message=短信发送成功&smsid=
 
-# 配置说明
+## 配置说明
 您需要配置 SSLVPN 的配置和 RuijieSMS 配置一致。
-## SSLVPN 侧
+### SSLVPN 侧
 配置短信策略管理，短信提供商为华兴软通。
 
 注册码同 config.toml 中的 stong.reg 参数。
@@ -34,7 +34,7 @@ result=0&message=短信发送成功&smsid=
 
 发送模板为固定值：${VCode}【SMSHOOK】
 
-## RuijieSms 侧
+### RuijieSms 侧
 
 1. [app] 节
    - listen: 应用程序监听的地址和端口号。
@@ -58,26 +58,26 @@ result=0&message=短信发送成功&smsid=
    - sign_name: 短信签名，用于标识短信来源。需替换为实际的签名名称。
      - 示例："your_sign_name"
 
-# 编译服务
+## 编译服务
 
 ```shell
 ./build.sh
 ```
 
-# 运行服务
+## 运行服务
 
 根据您所在的平台，运行对应的程序。
 
-# 劫持 DNS
+## 劫持 DNS
 对锐捷网关配置 DNS，将 www.stongnet.com 指向您的服务。
 
-# 锐捷 SSLVPN 短信服务 Debug
+## 锐捷 SSLVPN 短信服务 Debug
 
 在锐捷网关上执行以下命令，查看短信服务状态。
 ```shell
 show sslvpn short-message stong
 ```
 
-# 特殊说明
+## 特殊说明
 
 本程序仅供学习使用，请您在下载后 24小时内删除，如果本程序侵犯了您或公司的权益，请及时联系我，我会在第一时间处理。
