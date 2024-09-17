@@ -1,4 +1,4 @@
-# RuijieSSLVPN 短信服务扩展组件
+# Ruijie SSLVPN 短信服务扩展组件
 
 目前 Ruijie SSLVPN 支持的短信方式有限，本组件实现了基于腾讯云的短信扩展。
 
@@ -44,7 +44,7 @@ result=0&message=短信发送成功&smsid=
      - 示例："your_registration_value"
    - pwd: 华兴软通平台的密码。必须替换为实际的密码。
      - 示例："your_password_value"
-   3. [tencent] 节
+3. [tencent] 节
    - secret_id: 腾讯云账户的密钥 ID，用于 API 鉴权。需替换为实际的 Secret ID。
      - 示例："your_secret_id"
    - secret_key: 腾讯云账户的密钥 Key，用于 API 鉴权。需替换为实际的 Secret Key。
