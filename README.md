@@ -36,7 +36,7 @@ result=0&message=短信发送成功&smsid=
 
 密码同 config.toml 中的 stong.pwd 参数。
 
-发送模板为固定值：${VCode}【SMSHOOK】
+发送模板为固定值：${func},${VCode},${username}【SMSHOOK】
 
 ### RuijieSms 侧
 
