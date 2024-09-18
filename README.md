@@ -39,6 +39,8 @@ result=0&message=短信发送成功&smsid=
 1. [app] 节
    - listen: 应用程序监听的地址和端口号。
      - 默认值: 127.0.0.1:8080
+   - sender：发送短信的渠道
+     - 选项：feishu，tencent
 2. [stong] 节
    - reg: 华兴软通平台的注册号，用于认证。必须替换为实际的注册号。
      - 示例："your_registration_value"
@@ -57,6 +59,15 @@ result=0&message=短信发送成功&smsid=
      - 示例："your_template_id"
    - sign_name: 短信签名，用于标识短信来源。需替换为实际的签名名称。
      - 示例："your_sign_name"
+4. [feishu] 节
+   - app_id：飞书应用的 APPID
+     - 示例："your_app_id"
+   - app_secret：飞书应用的 Secret
+     - 示例："your_app_secret"
+   - template_id: 飞书卡片搭建工具创建的卡片 ID
+     - 示例："your_template_id"
+   - template_version_name：飞书卡片搭建工具创建的卡片版本
+     - 示例："your_template_version_name"
 
 ## 编译服务
 
