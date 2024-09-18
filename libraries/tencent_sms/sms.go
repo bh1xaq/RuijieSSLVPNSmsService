@@ -1,12 +1,12 @@
 package tencent_sms
 
 import (
-	"encoding/json"
 	"errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20210111"
 	"log"
+	"strings"
 )
 
 type Tencent struct {
@@ -18,7 +18,7 @@ type Tencent struct {
 	SignName    string `mapstructure:"sign_name"`
 }
 
-func (tencent Tencent) Send(phone string, content string) (string, error) {
+func (tencent *Tencent) Send(phone string, content string) (string, error) {
 	credential := common.NewCredential(
 		tencent.SecretId,
 		tencent.SecretKey,
@@ -32,13 +32,9 @@ func (tencent Tencent) Send(phone string, content string) (string, error) {
 	request.TemplateId = common.StringPtr(tencent.TemplateId)
 	request.SignName = common.StringPtr(tencent.SignName)
 	// 验证码内容主体
-	var jsonContent map[string]interface{}
-	err := json.Unmarshal([]byte(content), &jsonContent)
-	if err != nil {
-		log.Println("[TencentSms]验证码内容解析失败，原因是：", err.Error())
-		return "", errors.New("result=1&message=发送失败")
-	}
-	request.TemplateParamSet = common.StringPtrs([]string{jsonContent["name"].(string), jsonContent["func"].(string), jsonContent["code"].(string)})
+	content = strings.Replace(content, "【SMSHOOK】", "", -1)
+	contentMap := strings.Split(content, ",")
+	request.TemplateParamSet = common.StringPtrs(contentMap)
 	response, err := client.SendSms(request)
 	if err != nil {
 		log.Println("[TencentSms]发送短信失败，原因是：", err.Error())

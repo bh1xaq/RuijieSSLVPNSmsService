@@ -17,3 +17,5 @@ sign_name = "your_sign_name"
 [feishu]
 app_id = "your_app_id"
 app_secret = "your_app_secret"
+template_id = "your_template_id"
+template_version_name = "your_template_version_name"

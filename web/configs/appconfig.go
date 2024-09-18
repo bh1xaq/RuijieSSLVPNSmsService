@@ -9,6 +9,7 @@ type AppConfig struct {
 	App     App     `mapstructure:"app"`
 	Stong   Stong   `mapstructure:"stong"`
 	Tencent Tencent `mapstructure:"tencent"`
+	Feishu  Feishu  `mapstructure:"feishu"`
 }
 
 type App struct {
@@ -31,8 +32,10 @@ type Tencent struct {
 }
 
 type Feishu struct {
-	AppId     string `mapstructure:"app_id"`
-	AppSecret string `mapstructure:"app_secret"`
+	AppId               string `mapstructure:"app_id"`
+	AppSecret           string `mapstructure:"app_secret"`
+	TemplateId          string `mapstructure:"template_id"`
+	TemplateVersionName string `mapstructure:"template_version_name"`
 }
 
 func (app *AppConfig) Load() error {

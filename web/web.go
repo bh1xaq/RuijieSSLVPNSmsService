@@ -1,6 +1,7 @@
 package web
 
 import (
+	"RuijieSSLVPNSmsService/libraries/feishu"
 	"RuijieSSLVPNSmsService/libraries/tencent_sms"
 	"RuijieSSLVPNSmsService/web/configs"
 	"context"
@@ -85,6 +86,22 @@ func HookStongNetSms(c *gin.Context) {
 			TemplateId:  appConfig.Tencent.TemplateId,
 			SignName:    appConfig.Tencent.SignName,
 		}
+		resp, err := app.Send(phone, content)
+		if err != nil {
+			c.String(http.StatusOK, err.Error())
+			return
+		} else {
+			c.String(http.StatusOK, resp)
+			return
+		}
+	case "feishu":
+		app := feishu.Feishu{
+			AppId:               appConfig.Feishu.AppId,
+			AppSecret:           appConfig.Feishu.AppSecret,
+			TemplateId:          appConfig.Feishu.TemplateId,
+			TemplateVersionName: appConfig.Feishu.TemplateVersionName,
+		}
+		app.NewClient()
 		resp, err := app.Send(phone, content)
 		if err != nil {
 			c.String(http.StatusOK, err.Error())

@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/gin-gonic/gin v1.10.0
+	github.com/larksuite/oapi-sdk-go/v3 v3.3.3
 	github.com/spf13/viper v1.19.0
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.1004
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.1004
