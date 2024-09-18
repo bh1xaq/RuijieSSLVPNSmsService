@@ -1,5 +1,7 @@
 [app]
 listen = "127.0.0.1:8080"
+sender = "feishu"
+
 [stong]
 reg = "your_registration_value"
 pwd = "your_password_value"
@@ -11,3 +13,7 @@ region = "your_region"
 sms_sdk_app_id = "your_sms_sdk_app_id"
 template_id = "your_template_id"
 sign_name = "your_sign_name"
+
+[feishu]
+app_id = "your_app_id"
+app_secret = "your_app_secret"

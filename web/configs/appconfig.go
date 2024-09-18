@@ -13,6 +13,7 @@ type AppConfig struct {
 
 type App struct {
 	Listen string `mapstructure:"listen"`
+	Sender string `mapstructure:"sender"`
 }
 
 type Stong struct {
@@ -27,6 +28,11 @@ type Tencent struct {
 	SmsSdkAppId string `mapstructure:"sms_sdk_app_id"`
 	TemplateId  string `mapstructure:"template_id"`
 	SignName    string `mapstructure:"sign_name"`
+}
+
+type Feishu struct {
+	AppId     string `mapstructure:"app_id"`
+	AppSecret string `mapstructure:"app_secret"`
 }
 
 func (app *AppConfig) Load() error {

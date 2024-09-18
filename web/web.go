@@ -1,13 +1,11 @@
 package web
 
 import (
+	"RuijieSSLVPNSmsService/libraries/tencent_sms"
 	"RuijieSSLVPNSmsService/web/configs"
 	"context"
 	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
-	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20210111"
 	"log"
 	"net/http"
 	"os"
@@ -62,7 +60,7 @@ func HookStongNetSms(c *gin.Context) {
 	pwd := c.Query("pwd")
 	phone := c.Query("phone")
 	content := c.Query("content")
-	code := strings.Replace(content, "【SMSHOOK】", "", -1)
+	content = strings.Replace(content, "【SMSHOOK】", "", -1)
 
 	// 拦截缺失的参数
 	if reg == "" || pwd == "" || phone == "" || content == "" {
@@ -75,35 +73,25 @@ func HookStongNetSms(c *gin.Context) {
 		c.String(http.StatusOK, "result=1&message=鉴权失败")
 		return
 	}
-	credential := common.NewCredential(
-		appConfig.Tencent.SecretId,
-		appConfig.Tencent.SecretKey,
-	)
-	cpf := profile.NewClientProfile()
-	cpf.HttpProfile.Endpoint = "sms.tencentcloudapi.com"
-	client, _ := sms.NewClient(credential, appConfig.Tencent.Region, cpf)
-	request := sms.NewSendSmsRequest()
-	request.PhoneNumberSet = common.StringPtrs([]string{phone})
-	request.SmsSdkAppId = common.StringPtr(appConfig.Tencent.SmsSdkAppId)
-	request.TemplateId = common.StringPtr(appConfig.Tencent.TemplateId)
-	request.SignName = common.StringPtr(appConfig.Tencent.SignName)
-	// 验证码内容主体
-	request.TemplateParamSet = common.StringPtrs([]string{code})
-	response, err := client.SendSms(request)
-	if err != nil {
-		log.Println("[TencentSms]发送短信失败，原因是：", err.Error())
-		c.String(http.StatusOK, "result=1&message=发送失败")
-		return
-	}
-	requestId := response.Response.RequestId
-	status := response.Response.SendStatusSet[0]
-	if status.Code == common.StringPtr("Ok") {
-		log.Println("[TencentSms]请求 ID：", requestId, " 发送短信成功，手机号：", phone, " 响应信息：", status)
-		c.String(http.StatusOK, "result=0&message=发送成功&smsid="+*requestId)
-		return
-	} else {
-		log.Println("[TencentSms]请求 ID：", requestId, " 发送短信失败，响应信息：", response.ToJsonString())
-		c.String(http.StatusOK, "result=1&message=发送失败")
-		return
+
+	switch appConfig.App.Sender {
+	case "tencent":
+		// 调用腾讯云发送短信
+		app := tencent_sms.Tencent{
+			SecretId:    appConfig.Tencent.SecretId,
+			SecretKey:   appConfig.Tencent.SecretKey,
+			Region:      appConfig.Tencent.Region,
+			SmsSdkAppId: appConfig.Tencent.SmsSdkAppId,
+			TemplateId:  appConfig.Tencent.TemplateId,
+			SignName:    appConfig.Tencent.SignName,
+		}
+		resp, err := app.Send(phone, content)
+		if err != nil {
+			c.String(http.StatusOK, err.Error())
+			return
+		} else {
+			c.String(http.StatusOK, resp)
+			return
+		}
 	}
 }
